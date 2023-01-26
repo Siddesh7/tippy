@@ -1,25 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { WagmiConfig, createClient } from "wagmi";
+import { ConnectKitProvider, getDefaultClient } from "connectkit";
+import Main from "./components/Main";
+import { polygonMumbai, goerli } from "wagmi/chains";
+const chains = [polygonMumbai];
+const alchemyId = "1ObE0PIpsFlEXG3NQCsRkNM8K5vAL8rP";
+const client = createClient(
+  getDefaultClient({
+    appName: "BackerBoost",
+    chains,
+    alchemyId,
+  })
+);
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <WagmiConfig client={client}>
+      <ConnectKitProvider>
+        <Main />
+      </ConnectKitProvider>
+    </WagmiConfig>
   );
-}
-
+};
 export default App;
