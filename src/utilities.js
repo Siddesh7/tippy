@@ -15,7 +15,7 @@ export function calculateFlowRate(amountInEther) {
   }
 }
 
-async function createNewFlow(recipient, flowRate, provider, signer) {
+export async function createNewFlow(recipient, flowRate, provider, signer) {
   console.log(provider, signer);
   const sf = await Framework.create({
     chainId: 80001,
