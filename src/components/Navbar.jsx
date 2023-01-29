@@ -1,7 +1,7 @@
 import { ConnectKitButton } from "connectkit";
 export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg py-2 relative flex items-center w-full justify-between py-[14px] bg-white">
+    <nav className="navbar  py-2 relative flex items-center w-full justify-between py-[14px] bg-white">
       <div className="px-6 w-full flex flex-wrap items-center justify-between">
         <a className="navbar-brand" href="/">
           <h2

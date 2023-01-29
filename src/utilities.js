@@ -1,5 +1,6 @@
 import { Framework } from "@superfluid-finance/sdk-core";
 import { ethers } from "ethers";
+
 export function calculateFlowRate(amountInEther) {
   if (
     typeof Number(amountInEther) !== "number" ||
@@ -15,7 +16,12 @@ export function calculateFlowRate(amountInEther) {
   }
 }
 
-export async function createNewFlow(recipient, flowRate, provider, signer) {
+export async function createNewFlow(
+  recipient,
+  amountInEther,
+  provider,
+  signer
+) {
   console.log(provider, signer);
   const sf = await Framework.create({
     chainId: 80001,
@@ -26,9 +32,11 @@ export async function createNewFlow(recipient, flowRate, provider, signer) {
   const daix = await sf.loadSuperToken("fDAIx");
 
   try {
+    const monthlyAmount = ethers.utils.parseEther(amountInEther.toString());
+    const calculatedFlowRate = Math.floor(monthlyAmount / 3600 / 24 / 30);
     const createFlowOperation = daix.createFlow({
       receiver: recipient,
-      flowRate: flowRate,
+      flowRate: calculatedFlowRate,
       // userData?: string
     });
 

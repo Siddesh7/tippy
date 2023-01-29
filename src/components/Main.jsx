@@ -1,10 +1,10 @@
 import { ConnectKitButton } from "connectkit";
 import { useAccount } from "wagmi";
-
+import "../App.css";
 export default function Main() {
   const { address } = useAccount();
   return (
-    <div className="px-6 py-12 lg:py-24 md:px-12 text-center lg:text-left h-[80vh]">
+    <div className="px-6 py-12 lg:py-24 md:px-12 text-center lg:text-left h-[80vh] main">
       <div className="container mx-auto text-gray-800">
         <div className="grid lg:grid-cols-[3fr,1fr] gap-12 flex items-center">
           <div className="mt-12 lg:mt-0" style={{ zIndex: 10 }}>
@@ -26,7 +26,7 @@ export default function Main() {
                 href={`/${address.toLowerCase()}`}
                 className="flex lg:block justify-center items-center"
               >
-                <div className="w-[250px] mt-[30px] flex items-center bg-white shadow rounded-lg py-4 px-8">
+                <div className="w-[250px] mt-[30px] flex items-center shadow rounded-lg py-4 px-8">
                   <p
                     className="m-auto inset-0 text-xl font-semibold leading-7 text-center text-gray-800"
                     disabled
