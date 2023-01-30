@@ -16,11 +16,18 @@ router.post("/create", async (req, res) => {
 
 router.get("/user", async (req, res) => {
   console.log(req.query);
+  let user;
   try {
-    const medium = req.query.medium;
-    const user = await userDeets.find({
-      [medium]: req.query.user,
-    });
+    if (req.query.medium && req.query.user) {
+      const medium = req.query.medium;
+      user = await userDeets.find({
+        [medium]: req.query.user,
+      });
+    } else {
+      user = await userDeets.find({
+        wallet: req.query.wallet,
+      });
+    }
     res.send(user);
   } catch (error) {
     res.send(error);

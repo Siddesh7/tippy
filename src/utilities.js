@@ -1,18 +1,36 @@
 import { Framework } from "@superfluid-finance/sdk-core";
 import { ethers } from "ethers";
+import * as PushAPI from "@pushprotocol/restapi";
 
-export function calculateFlowRate(amountInEther) {
-  if (
-    typeof Number(amountInEther) !== "number" ||
-    isNaN(Number(amountInEther)) === true
-  ) {
-    console.log(typeof Number(amountInEther));
-    alert("You can only calculate a flowRate based on a number");
-    return;
-  } else if (typeof Number(amountInEther) === "number") {
-    const monthlyAmount = ethers.utils.parseEther(amountInEther.toString());
-    const calculatedFlowRate = Math.floor(monthlyAmount / 3600 / 24 / 30);
-    return calculatedFlowRate;
+const Pkey = `0x${process.env.REACT_APP_PRIVATE_KEY}`;
+console.log(Pkey);
+const signer = new ethers.Wallet(Pkey);
+
+export async function sendNotification(title, body, receiver) {
+  try {
+    const apiResponse = await PushAPI.payloads.sendNotification({
+      signer,
+      type: 3, // target
+      identityType: 2, // direct payload
+      notification: {
+        title: title,
+        body: body,
+      },
+      payload: {
+        title: title,
+        body: body,
+        cta: "",
+        img: "",
+      },
+      recipients: `eip155:5:${receiver}`, // recipient address
+      channel: "eip155:5:0xB2aA4Fd98fdd12E0143E4A1F89ea35b966eaCebD", // your channel address
+      env: "staging",
+    });
+
+    // apiResponse?.status === 204, if sent successfully!
+    console.log("API repsonse: ", apiResponse);
+  } catch (err) {
+    console.error("Error: ", err);
   }
 }
 

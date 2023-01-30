@@ -1,49 +1,24 @@
-import {
-  Box,
-  Card,
-  CardBody,
-  CardHeader,
-  Heading,
-  Stack,
-  StackDivider,
-  Text,
-} from "@chakra-ui/react";
+import EditProfile from "./editProfile";
 
-export default function Profile() {
+export default function Profile({ wallet, name, twitter }) {
   return (
-    <Card>
-      <CardHeader>
-        <Heading size="md">Client Report</Heading>
-      </CardHeader>
-
-      <CardBody>
-        <Stack divider={<StackDivider />} spacing="4">
-          <Box>
-            <Heading size="xs" textTransform="uppercase">
-              Summary
-            </Heading>
-            <Text pt="2" fontSize="sm">
-              View a summary of all your clients over the last month.
-            </Text>
-          </Box>
-          <Box>
-            <Heading size="xs" textTransform="uppercase">
-              Overview
-            </Heading>
-            <Text pt="2" fontSize="sm">
-              Check out the overview of your clients.
-            </Text>
-          </Box>
-          <Box>
-            <Heading size="xs" textTransform="uppercase">
-              Analysis
-            </Heading>
-            <Text pt="2" fontSize="sm">
-              See a detailed analysis of all your business clients.
-            </Text>
-          </Box>
-        </Stack>
-      </CardBody>
-    </Card>
+    <div className="flex flex-col justify-center w-full p-6 shadow-md rounded-xl sm:px-12 dark:bg-gray-900 dark:text-gray-100 relative">
+      <div className="absolute right-[10px] top-[10px] ">
+        <EditProfile />
+      </div>
+      <img
+        src="https://source.unsplash.com/150x150/?portrait?3"
+        alt=""
+        className="w-32 h-32 mx-auto rounded-full dark:bg-gray-500 aspect-square"
+      />
+      <div className="space-y-4 text-center divide-y divide-gray-700">
+        <div className="my-2 space-y-1">
+          <h2 className="text-xl font-semibold sm:text-2xl">Siddesh</h2>
+          <p className="px-5 text-xs sm:text-base dark:text-gray-400">
+            {`@0xSiddesh`}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }

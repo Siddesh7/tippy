@@ -6,7 +6,7 @@ export default function Navbar() {
         <a className="navbar-brand" href="/">
           <h2
             className="font-bold leading-tight text-4xl mt-0 mb-2 bg-gradient-to-r bg-clip-text  text-transparent 
-            from-white via-[#91e02a] via-[#e0ce2a] via-[#82e02a] to-white
+            from-black via-[#91e02a] via-[#e0ce2a] via-[#82e02a] to-black
             animate-text"
           >
             StreamThaTip

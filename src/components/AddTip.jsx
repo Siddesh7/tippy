@@ -21,7 +21,7 @@ import {
 import axios from "axios";
 import { useRef, useState } from "react";
 import { useAccount, useProvider, useSigner } from "wagmi";
-import { createNewFlow } from "../utilities";
+import { createNewFlow, sendNotification } from "../utilities";
 
 export default function InitialFocus() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -54,12 +54,12 @@ export default function InitialFocus() {
 
   return (
     <>
-      <Button onClick={onOpen}>Open Modal</Button>
+      <Button onClick={onOpen}>Create a new tip</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create your account</ModalHeader>
+          <ModalHeader>Tip</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
@@ -94,19 +94,23 @@ export default function InitialFocus() {
                 </InputRightElement>{" "}
               </InputGroup>
             </FormControl>
-            {data !== null && data.length == 0 ? (
-              <Alert status="warning">
-                <AlertIcon />
-                Seems your this user hasn't verified their wallet
-              </Alert>
-            ) : (
-              <Alert status="success">
-                <AlertIcon />
-                This user has signed up!
-              </Alert>
+            {data !== null && (
+              <p>
+                {data !== null && data.length == 0 ? (
+                  <Alert status="warning">
+                    <AlertIcon />
+                    Seems this user hasn't verified their wallet
+                  </Alert>
+                ) : (
+                  <Alert status="success">
+                    <AlertIcon />
+                    This user has signed up!
+                  </Alert>
+                )}
+              </p>
             )}
             <FormControl mt={4}>
-              <FormLabel>$xUSDC to tip per month</FormLabel>
+              <FormLabel>$DAIx to tip per month</FormLabel>
               {data !== null && data.length !== 0 ? (
                 <Input
                   placeholder="USDC tip/mo"
@@ -118,7 +122,7 @@ export default function InitialFocus() {
               ) : (
                 <Input
                   disabled
-                  placeholder="USDC tip/mo"
+                  placeholder="DAIx tip/mo"
                   onChange={(e) => {
                     setFormData({ ...formData, tip: e.target.value });
                   }}
@@ -129,24 +133,23 @@ export default function InitialFocus() {
           </ModalBody>
 
           <ModalFooter>
-            {data !== null && data.length != 0 ? (
+            {data !== null && data.length != 0 && (
               <Button
                 colorScheme="blue"
                 mr={3}
                 disabled
                 onClick={() => {
                   createNewFlow(data[0].wallet, formData.tip, provider, signer);
+                  sendNotification(
+                    "New Supporter",
+                    `Someone started streaming ${formData.tip}/mo`,
+                    data[0].wallet
+                  );
                   console.log(data[0].wallet, formData.tip);
                 }}
               >
                 Create
               </Button>
-            ) : (
-              <CircularProgress
-                size={"20px"}
-                isIndeterminate
-                color="green.300"
-              />
             )}
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>
